@@ -50,7 +50,7 @@ from eddy.core.functions.fsystem import fwrite, fexists
 from eddy.core.functions.misc import format_exception
 from eddy.core.functions.path import openPath, expandPath
 from eddy.core.output import getLogger
-from eddy.core.owl import AnnotationAssertion
+from eddy.core.owl import AnnotationAssertion, OWL2Datatype
 from eddy.core.plugin import AbstractPlugin
 from eddy.core.project import K_DESCRIPTION
 from eddy.ui.dialogs import DiagramSelectionDialog
@@ -143,7 +143,9 @@ class DescriptionsLoader:
             property_iri = self.find_iri('http://www.w3.org/2000/01/rdf-schema#comment')
             for row in csv_reader:
                 iri = self.find_iri(row[0])
-                assertion = AnnotationAssertion(iri, property_iri, row[1] + '@it')
+                assertion = AnnotationAssertion(iri, property_iri, row[1], OWL2Datatype.PlainLiteral.value, 'it')
+                print(row[0])
+                print(iri)
                 iri.annotationAssertions.append(assertion)
 
     def find_iri(self, iri_str):
